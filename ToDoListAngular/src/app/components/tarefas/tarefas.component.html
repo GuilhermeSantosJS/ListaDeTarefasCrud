@@ -1,0 +1,81 @@
+<div class="container p-5"  *ngIf="visibilidadeTabela">
+    <div class="border boder-light rounded p-5">
+        <div>
+         <button type="button" class="btn btn-sm btn-secondary" (click)="ExibirFormularioCadastro()">
+              Nova Tarefa
+         </button>
+        </div>
+
+<hr/>
+
+<table class="table table-striped table-hover table-sm" *ngIf="tarefas">
+     <tr class="thead-light">
+         <th>Concluidas</th>
+         <th>Titulo</th>
+         <th>Descrição</th>
+         <th>Ações</th>
+     </tr>
+
+     <tr *ngFor="let tarefa of tarefas">
+         <td><img class="imagem_size" *ngIf="tarefa.status == true" src="../../../assets/checked.png" /></td>
+         <td>{{tarefa.titulo}}</td>
+         <td>{{tarefa.descricao}}</td>
+         <td>
+             <button type="button" class="btn btn-sm btn-outline-info" (click)="ExibirFormularioAtualizacao(tarefa.tarefaId)">
+                Atualizar</button>
+             <button type="button" class="btn btn-sm btn-outline-danger" (click)="ExibirConfirmacaoExclusao(tarefa.tarefaId, tarefa.titulo, conteudoModal)">Excluir</button>
+             <button type="button" class="btn btn-sm btn-outline-info botao_cor" *ngIf="tarefa.status == false" (click)="AtualizarStatusConcluido(tarefa.tarefaId)">Concluir</button>
+         </td>
+     </tr>
+</table>
+</div>
+</div>
+
+
+<div class="container p-5" *ngIf="visibilidadeFormulario">
+    <div class="row">
+        <div class="col-6 border boder-light rounded p-5 shadow" *ngIf="formulario">
+            <h6>{{ tituloFormulario }}</h6>
+            <hr/>
+
+            <form [formGroup]="formulario" (ngSubmit)="EnviarFormulario()">
+                <div class="form-group">
+                     <label>Titulo</label>
+                     <input type="text" class="form-control form-control-sm" formControlName="titulo"/>
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="descricao"/>
+               </div>
+
+               <div class="container">
+                   <div class="row">
+                       <div>
+                           <button type="submit" class="btn btn-sm btn-outline-secondary botao_posicao">Salvar</button>
+                       </div>
+                       <div class="pl-1">
+                            <button type="button" class="btn btn-sm btn-light botao_voltar" (click)="Voltar()">Voltar</button>
+                       </div>
+                   </div>
+               </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<ng-template #conteudoModal>
+    <div class="modal-header">
+      <h4 class="modal-title">Confirmação de Exclusão</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        Prosseguir com a exclusão do(a) {{ tituloTarefa }} 
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modalRef.hide()">Não</button>
+      <button type="button" class="btn btn-outline-danger" (click)="ExcluirTarefa(tarefaId)">Sim</button>
+    </div>
+</ng-template>

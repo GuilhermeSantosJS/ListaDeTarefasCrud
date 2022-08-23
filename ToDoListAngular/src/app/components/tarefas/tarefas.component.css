@@ -1,0 +1,19 @@
+.botao_posicao {
+    position: relative;
+    top: 32px;
+}
+
+.botao_voltar {
+    position: relative;
+    left: 63px;
+}
+
+.botao_cor {
+    color: green;
+    border-color: green;
+    --bs-btn-hover-bg: #dee2e6 !important;
+}
+
+.imagem_size {
+    height: 46px;
+}
